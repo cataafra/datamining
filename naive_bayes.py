@@ -140,7 +140,6 @@ class NaiveBayesFromScratch:
         predictions = self.predict(X)
         return np.mean(predictions == y)
 
-
 # # Example usage:
 # if __name__ == "__main__":
 #     # Generate simple example data
