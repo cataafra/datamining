@@ -14,9 +14,7 @@ from sklearn.metrics import (
     davies_bouldin_score
 )
 import time
-import seaborn as sns
 
-# Import our implementations
 from knn import KNNFromScratch
 from decision_tree import DecisionTreeFromScratch
 from naive_bayes import NaiveBayesFromScratch
@@ -76,17 +74,6 @@ class AlgorithmComparison:
         }
 
         print("Algorithms initialized")
-
-    # def plot_confusion_matrix(self, y_true, y_pred, title):
-    #     """Plot confusion matrix for a classifier"""
-    #     cm = confusion_matrix(y_true, y_pred)
-    #     plt.figure(figsize=(8, 6))
-    #     sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
-    #     plt.title(f'Confusion Matrix - {title}')
-    #     plt.ylabel('True Label')
-    #     plt.xlabel('Predicted Label')
-    #     plt.savefig(f'confusion_matrix_{title.lower().replace(" ", "_")}.png')
-    #     plt.close()
 
     def calculate_supervised_metrics(self, y_true, y_pred):
         """Calculate metrics for supervised learning algorithms"""
