@@ -175,22 +175,3 @@ class KMeansFromScratch:
         """
         self.fit(X)
         return self.labels
-
-
-# # Example usage:
-# if __name__ == "__main__":
-#     # Generate simple example data
-#     np.random.seed(42)
-#     X = np.concatenate([
-#         np.random.normal(0, 1, (100, 2)),  # Cluster 1
-#         np.random.normal(4, 1, (100, 2)),  # Cluster 2
-#         np.random.normal(-4, 1, (100, 2))  # Cluster 3
-#     ])
-#
-#     # Create and fit model
-#     kmeans = KMeansFromScratch(n_clusters=3, random_state=42)
-#     labels = kmeans.fit_predict(X)
-#
-#     print("Cluster assignments:", labels)
-#     print("Cluster centers:\n", kmeans.centroids)
-#     print("Inertia:", kmeans.inertia_)

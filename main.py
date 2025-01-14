@@ -94,53 +94,6 @@ class AlgorithmComparison:
             'davies_bouldin': davies_bouldin_score(X, labels)
         }
 
-    def train_and_evaluate(self):
-        """Train and evaluate all algorithms"""
-        print("\nTraining and evaluating algorithms...")
-
-        for name, algorithm in self.algorithms.items():
-            print(f"\nEvaluating {name}:")
-
-            # Training time
-            train_start = time.time()
-
-            if name != 'K-Means':
-                algorithm.fit(self.X_train_scaled, self.y_train)
-            else:
-                # For K-Means, use only the features
-                X_for_kmeans = self.X_train_scaled.copy()
-                algorithm.fit(X_for_kmeans)
-
-            train_end = time.time()
-            self.training_times[name] = train_end - train_start
-
-            # Prediction time
-            predict_start = time.time()
-
-            if name != 'K-Means':
-                y_pred = algorithm.predict(self.X_test_scaled)
-                self.detailed_metrics[name] = self.calculate_supervised_metrics(self.y_test, y_pred)
-                self.results[name] = self.detailed_metrics[name]['accuracy']
-
-                # Plot confusion matrix
-                self.plot_confusion_matrix(self.y_test, y_pred, name)
-            else:
-                # For K-Means, calculate clustering metrics
-                X_test_for_kmeans = self.X_test_scaled.copy()
-                labels = algorithm.predict(X_test_for_kmeans)
-                self.detailed_metrics[name] = self.calculate_clustering_metrics(X_test_for_kmeans, labels)
-                self.results[name] = self.detailed_metrics[name]['silhouette']
-
-            predict_end = time.time()
-            self.prediction_times[name] = predict_end - predict_start
-
-            # Print results
-            print("\nMetrics:")
-            for metric, value in self.detailed_metrics[name].items():
-                print(f"{metric}: {value:.4f}")
-            print(f"Training Time: {self.training_times[name]:.4f} seconds")
-            print(f"Prediction Time: {self.prediction_times[name]:.4f} seconds")
-
     def visualize_results(self):
         """Create visualizations comparing algorithm performance"""
         print("\nCreating visualizations...")
@@ -227,6 +180,101 @@ class AlgorithmComparison:
         for name in self.algorithms.keys():
             print(f"\n{name}:")
             print("\nDetailed Metrics:")
+            for metric, value in self.detailed_metrics[name].items():
+                print(f"{metric}: {value:.4f}")
+            print(f"Training Time: {self.training_times[name]:.4f} seconds")
+            print(f"Prediction Time: {self.prediction_times[name]:.4f} seconds")
+
+    def plot_kmeans_clusters(self, X, labels, title='K-Means Clustering'):
+        """
+        Create scatter plots for K-means clustering results using all feature combinations
+
+        Args:
+            X: Features data
+            labels: Cluster assignments
+            title: Plot title
+        """
+        # Define feature pairs for plotting
+        feature_pairs = [
+            (0, 1), (0, 2), (0, 3),
+            (1, 2), (1, 3),
+            (2, 3)
+        ]
+
+        # Create a figure with subplots for each feature pair
+        fig = plt.figure(figsize=(15, 10))
+
+        # Colors for clusters
+        colors = ['#FF9999', '#66B2FF', '#99FF99']
+
+        for idx, (i, j) in enumerate(feature_pairs, 1):
+            plt.subplot(2, 3, idx)
+
+            # Plot points for each cluster
+            for cluster in range(3):  # Assuming 3 clusters for Iris
+                mask = labels == cluster
+                plt.scatter(X[mask, i], X[mask, j],
+                            c=[colors[cluster]],
+                            label=f'Cluster {cluster}',
+                            alpha=0.6)
+
+            # Add feature names as axis labels
+            plt.xlabel(self.feature_names[i])
+            plt.ylabel(self.feature_names[j])
+
+            if idx == 1:  # Only show legend for first subplot
+                plt.legend()
+
+        plt.suptitle(title, fontsize=14)
+        plt.tight_layout()
+        plt.savefig('kmeans_clusters.png', bbox_inches='tight', dpi=300)
+        plt.close()
+
+    def train_and_evaluate(self):
+        """Train and evaluate all algorithms"""
+        print("\nTraining and evaluating algorithms...")
+
+        for name, algorithm in self.algorithms.items():
+            print(f"\nEvaluating {name}:")
+
+            # Training time
+            train_start = time.time()
+
+            if name != 'K-Means':
+                algorithm.fit(self.X_train_scaled, self.y_train)
+            else:
+                # For K-Means, use only the features
+                X_for_kmeans = self.X_train_scaled.copy()
+                algorithm.fit(X_for_kmeans)
+
+            train_end = time.time()
+            self.training_times[name] = train_end - train_start
+
+            # Prediction time
+            predict_start = time.time()
+
+            if name != 'K-Means':
+                y_pred = algorithm.predict(self.X_test_scaled)
+                self.detailed_metrics[name] = self.calculate_supervised_metrics(self.y_test, y_pred)
+                self.results[name] = self.detailed_metrics[name]['accuracy']
+
+                # Plot confusion matrix
+                self.plot_confusion_matrix(self.y_test, y_pred, name)
+            else:
+                # For K-Means, calculate clustering metrics
+                X_test_for_kmeans = self.X_test_scaled.copy()
+                labels = algorithm.predict(X_test_for_kmeans)
+                self.detailed_metrics[name] = self.calculate_clustering_metrics(X_test_for_kmeans, labels)
+                self.results[name] = self.detailed_metrics[name]['silhouette']
+
+                # Plot clustering results
+                self.plot_kmeans_clusters(X_test_for_kmeans, labels)
+
+            predict_end = time.time()
+            self.prediction_times[name] = predict_end - predict_start
+
+            # Print results
+            print("\nMetrics:")
             for metric, value in self.detailed_metrics[name].items():
                 print(f"{metric}: {value:.4f}")
             print(f"Training Time: {self.training_times[name]:.4f} seconds")

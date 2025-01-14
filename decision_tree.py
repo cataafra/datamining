@@ -214,27 +214,3 @@ class DecisionTreeFromScratch:
         if x[node.feature] <= node.threshold:
             return self._traverse_tree(x, node.left)
         return self._traverse_tree(x, node.right)
-
-
-# # Example usage:
-# if __name__ == "__main__":
-#     # Generate simple example data
-#     np.random.seed(42)
-#     X = np.random.rand(100, 2)  # 100 samples, 2 features
-#     y = np.random.randint(0, 2, 100)  # Binary classification
-#
-#     # Split into train and test
-#     train_idx = np.random.choice([True, False], len(X), p=[0.8, 0.2])
-#     X_train, X_test = X[train_idx], X[~train_idx]
-#     y_train, y_test = y[train_idx], y[~train_idx]
-#
-#     # Create and train model
-#     dt = DecisionTreeFromScratch(max_depth=5)
-#     dt.fit(X_train, y_train)
-#
-#     # Make predictions
-#     predictions = dt.predict(X_test)
-#     accuracy = np.mean(predictions == y_test)
-#     print("Predictions:", predictions)
-#     print("True labels:", y_test)
-#     print("Accuracy:", accuracy)

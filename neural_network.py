@@ -156,32 +156,3 @@ class NeuralNetworkFromScratch:
         """
         predictions = self.predict(X)
         return np.mean(predictions == y)
-
-
-# # Example usage:
-# if __name__ == "__main__":
-#     # Generate simple example data
-#     np.random.seed(42)
-#     X = np.random.randn(100, 4)  # 100 samples, 4 features
-#     y = np.random.randint(0, 3, 100)  # 3-class classification
-#
-#     # Split into train and test
-#     train_idx = np.random.choice([True, False], len(X), p=[0.8, 0.2])
-#     X_train, X_test = X[train_idx], X[~train_idx]
-#     y_train, y_test = y[train_idx], y[~train_idx]
-#
-#     # Create and train model
-#     nn = NeuralNetworkFromScratch(
-#         input_size=4,
-#         hidden_size=8,
-#         output_size=3,
-#         learning_rate=0.01
-#     )
-#     nn.fit(X_train, y_train, epochs=1000, verbose=True)
-#
-#     # Make predictions
-#     predictions = nn.predict(X_test)
-#     accuracy = nn.score(X_test, y_test)
-#     print("\nTest Predictions:", predictions)
-#     print("True labels:", y_test)
-#     print("Test Accuracy:", accuracy)

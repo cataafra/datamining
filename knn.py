@@ -98,23 +98,3 @@ class KNNFromScratch:
         """
         predictions = self.predict(X)
         return np.mean(predictions == y)
-
-
-# # Example usage:
-# if __name__ == "__main__":
-#     # Generate simple example data
-#     np.random.seed(42)
-#     X_train = np.random.rand(20, 2)  # 20 samples, 2 features
-#     y_train = np.random.randint(0, 2, 20)  # Binary classification
-#     X_test = np.random.rand(5, 2)  # 5 test samples
-#     y_test = np.random.randint(0, 2, 5)
-#
-#     # Create and train model
-#     knn = KNNFromScratch(k=3)
-#     knn.fit(X_train, y_train)
-#
-#     # Make predictions
-#     predictions = knn.predict(X_test)
-#     print("Predictions:", predictions)
-#     print("True labels:", y_test)
-#     print("Accuracy:", knn.score(X_test, y_test))

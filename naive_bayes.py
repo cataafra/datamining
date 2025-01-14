@@ -139,26 +139,3 @@ class NaiveBayesFromScratch:
         """
         predictions = self.predict(X)
         return np.mean(predictions == y)
-
-# # Example usage:
-# if __name__ == "__main__":
-#     # Generate simple example data
-#     np.random.seed(42)
-#     X = np.random.randn(100, 2)  # 100 samples, 2 features
-#     y = np.random.randint(0, 2, 100)  # Binary classification
-#
-#     # Split into train and test
-#     train_idx = np.random.choice([True, False], len(X), p=[0.8, 0.2])
-#     X_train, X_test = X[train_idx], X[~train_idx]
-#     y_train, y_test = y[train_idx], y[~train_idx]
-#
-#     # Create and train model
-#     nb = NaiveBayesFromScratch()
-#     nb.fit(X_train, y_train)
-#
-#     # Make predictions
-#     predictions = nb.predict(X_test)
-#     accuracy = nb.score(X_test, y_test)
-#     print("Predictions:", predictions)
-#     print("True labels:", y_test)
-#     print("Accuracy:", accuracy)
